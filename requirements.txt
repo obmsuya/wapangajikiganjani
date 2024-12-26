@@ -1,0 +1,14 @@
+asgiref==3.8.1
+Django==5.0.1
+django-cors-headers==4.3.1
+django-crispy-forms==2.1
+django-filter==23.5
+django-phonenumber-field==7.3.0
+djangorestframework==3.14.0
+phonenumbers==8.13.52
+pillow==10.2.0
+psycopg2-binary==2.9.9
+python-dotenv==1.0.0
+pytz==2024.2
+sqlparse==0.5.3
+typing_extensions==4.12.2
