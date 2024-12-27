@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1
+      - SECRET_KEY='django-insecure-ncrk96#jdsrj-9y7zsfg7$$%xyke7l)%lw4&mc7)6vh=n$$vskwq'
+      - DATABASE_URL=postgis://postgres:postgres@db:5432/wapangaji_db
+      - DJANGO_SETTINGS_MODULE=wapangaji_kiganjani.settings.base
+    depends_on:
+      - db
+    networks:
+      - wapangaji_network
+
+  db:
+    image: postgis/postgis:15-3.3
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=wapangaji_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5433:5432"
+    networks:
+      - wapangaji_network
+
+networks:
+  wapangaji_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
