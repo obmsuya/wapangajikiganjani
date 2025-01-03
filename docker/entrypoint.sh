@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/sh
+set -e
 
 # Wait for postgres
 echo "Waiting for PostgreSQL..."
@@ -14,9 +15,9 @@ python manage.py migrate
 # Create superuser if DJANGO_SUPERUSER_USERNAME is set
 if [ -n "$DJANGO_SUPERUSER_USERNAME" ] && [ -n "$DJANGO_SUPERUSER_PASSWORD" ] && [ -n "$DJANGO_SUPERUSER_EMAIL" ]; then
     echo "Creating superuser..."
-    python manage.py createsuperuser --noinput
+    python manage.py createsuperuser --noinput || true
 fi
 
 # Start server
 echo "Starting server..."
-python manage.py runserver 0.0.0.0:8000
+exec "$@"
